@@ -1,0 +1,78 @@
+﻿@using ArticlesApp.Database.SqlServer.Models
+@using ArticlesApp.WebAPI.IdentityService.Services.AccountMerge
+@using Microsoft.AspNetCore.Authentication
+@using ArticlesApp.WebAPI.IdentityService.Services
+@inject SignInManager<ApplicationUser_DB> SignInManager
+@inject UserManager<ApplicationUser_DB> UserManager
+@inject AccountMergeManager AccountMergeManager
+
+
+
+@{
+    IEnumerable<AuthenticationScheme> externalAuthenticationSchemes =
+        await SignInManager.GetExternalAuthenticationSchemesAsync();
+    bool hasExternalLogins = externalAuthenticationSchemes.Any();
+
+    List<AccountMerge_SqlServer> accountMergeRecords =
+        await AccountMergeManager.GetRecordsAsync(UserManager.GetUserId(User));
+    bool hasOpenAccountMergeRequests = accountMergeRecords.Any();
+}
+
+
+
+<ul class="nav nav-pills flex-column">
+    <li class="nav-item">
+        <a
+            class="nav-link @ManageNavPages.IndexNavClass(ViewContext)"
+            id="profile"
+            asp-page="./Index"
+        >
+            Profile
+        </a>
+    </li>
+    <li class="nav-item">
+        <a
+            class="nav-link @ManageNavPages.EmailNavClass(ViewContext)"
+            id="email"
+            asp-page="./Email"
+        >
+            Email
+        </a>
+    </li>
+    @if (hasExternalLogins)
+    {
+        <li
+            id="external-logins"
+            class="nav-item"
+        >
+            <a
+                id="external-login"
+                class="nav-link @ManageNavPages.ExternalLoginsNavClass(ViewContext)"
+                asp-page="./ExternalLogins"
+            >
+                External logins
+            </a>
+        </li>
+    }
+    <li class="nav-item">
+        <a
+            class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)"
+            id="personal-data"
+            asp-page="./PersonalData"
+        >
+            Personal data
+        </a>
+    </li>
+    @if (hasOpenAccountMergeRequests)
+    {
+        <li class="nav-item">
+            <a
+                class="nav-link @ManageNavPages.AccountMergeNavClass(ViewContext)"
+                id="personal-data"
+                asp-page="./AccountMergeList"
+            >
+                Account merges
+            </a>
+        </li>
+    }
+</ul>

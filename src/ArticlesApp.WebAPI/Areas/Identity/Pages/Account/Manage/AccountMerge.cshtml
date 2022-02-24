@@ -1,0 +1,161 @@
+﻿@page
+@model AccountMergeModel
+@using ArticlesApp.Database.SqlServer.Models;
+
+@{
+    ViewData["Title"] = "Account merge";
+}
+
+
+
+<partial
+    name="_StatusMessage"
+    for="StatusMessage"
+/>
+<h4>
+    Merge accounts
+</h4>
+<p>
+    You can merge both accounts into the primary account. All the data will be preserved.
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-unstyled">
+            @if (Model.PrimaryUser?.Id == Model.CurrentUserId)
+            {
+                <li style="padding-bottom: 8px;">
+                    <b>
+                        This account, primary:
+                    </b>
+                </li>
+            }
+            else
+            {
+                <li style="padding-bottom: 8px;">
+                    <b>
+                        Primary account:
+                    </b>
+                </li>
+            }
+            <li style="padding-bottom: 8px;">
+                Name: @Model.PrimaryUser?.UserName
+            </li>
+            @if (Model.PrimaryUser?.Email != null)
+            {
+                <li style="padding-bottom: 8px;">
+                    Email: @Model.PrimaryUser?.Email
+                </li>
+            }
+            <li>
+                Connected logins:
+            </li>
+            <ul>
+                @if (Model.PrimaryUser?.PasswordHash != null)
+                {
+                    <li>
+                        Local account
+                    </li>
+                }
+                @foreach (UserLoginInfo login in Model.PrimaryUser_CurrentLogins!)
+                {
+                    <li>
+                        @login.ProviderDisplayName
+                    </li>
+                }
+            </ul>
+        </ul>
+    </div>
+    <div
+        class="col-md-6"
+    >
+        <ul class="list-unstyled">
+            @if (Model.SecondaryUser?.Id == Model.CurrentUserId)
+            {
+                <li style="padding-bottom: 8px;">
+                    <b>
+                        This account, secondary:
+                    </b>
+                </li>
+            }
+            else
+            {
+                <li style="padding-bottom: 8px;">
+                    <b>
+                        Secondary account:
+                    </b>
+                </li>
+            }
+            <li style="padding-bottom: 8px;">
+                Name: @Model.SecondaryUser?.UserName
+            </li>
+            @if (Model.SecondaryUser?.Email != null)
+            {
+                <li style="padding-bottom: 8px;">
+                    Email: @Model.SecondaryUser?.Email
+                </li>
+            }
+            <li>
+                Connected logins:
+            </li>
+            <ul>
+                @if (Model.SecondaryUser?.PasswordHash != null)
+                {
+                    <li>
+                        Local account
+                    </li>
+                }
+                @foreach (UserLoginInfo login in Model.SecondaryUser_CurrentLogins!)
+                {
+                    <li>
+                        @login.ProviderDisplayName
+                    </li>
+                }
+            </ul>
+        </ul>
+    </div>
+</div>
+<form
+    asp-page-handler="Confirm"
+    method="post"
+>
+    <input
+        hidden
+        name="AccountMergeId"
+        value=@Model.AccountMergeRecord!.Id
+    />
+    <input
+        hidden
+        name="Timestamp"
+        value=@Convert.ToBase64String(@Model.AccountMergeRecord.Timestamp!)
+    />
+    @{
+        AccountMerge_SqlServer record = Model.AccountMergeRecord;
+        @if (
+            (Model.CurrentUserId == record.PrimaryUserId && record.PrimaryUserConfirmed)
+            || (Model.CurrentUserId == record.SecondaryUserId && record.SecondaryUserConfirmed)
+        )
+        {
+            <p>
+                You have confirmed the merge. Waiting for the second user to confirm.
+            </p>
+        } 
+        else 
+        {
+            <button
+                type="submit"
+                class="btn btn-primary"
+                title="Merge account with the current email."
+                style="margin-right: 8px;"
+            >
+                Merge accounts
+            </button>
+        }
+    }
+    <button
+        asp-page-handler="Reject"
+        class="btn btn-outline-secondary"
+    >
+        Reject
+    </button>
+</form>

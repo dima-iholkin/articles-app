@@ -1,0 +1,10 @@
+﻿[*.cs]
+
+# IDE0090: Use 'new(...)'
+dotnet_diagnostic.IDE0090.severity = silent
+
+# CA1822: Mark members as static
+dotnet_diagnostic.CA1822.severity = silent
+
+# IDE0037: Use inferred member name
+dotnet_diagnostic.IDE0037.severity = none

@@ -1,0 +1,41 @@
+﻿using ArticlesApp.Core.Entities.Notification;
+using ArticlesApp.Database.Models;
+
+
+
+namespace ArticlesApp.Database.SqlServer.Models;
+
+
+
+public class Notification_SqlServer : INotification
+{
+    public Notification_SqlServer(
+        int id,
+        string message,
+        string reciever_UserId,
+        DateTime createdAt_DateUtc
+    )
+    {
+        Id = id;
+        Message = message;
+        Reciever_UserId = reciever_UserId;
+        CreatedAt_DateUtc = createdAt_DateUtc;
+    }
+
+    public int Id { get; set; }
+
+    public string Message { get; set; }
+
+    public string Reciever_UserId { get; set; }
+    public ApplicationUser_DB? Reciever { get; set; }
+
+    public DateTime CreatedAt_DateUtc { get; set; }
+
+    public DateTime? ReadAt_DateUtc { get; set; }
+
+    public NotificationTypesEnum? NotificationType_TypeId { get; set; }
+    public NotificationType? NofiticationType { get; set; }
+
+    public int? ReferencedArticle_ArticleId { get; set; }
+    public Article_SqlServer? ReferencedArticle { get; set; }
+}

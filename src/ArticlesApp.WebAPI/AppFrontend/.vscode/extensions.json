@@ -1,0 +1,17 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+	// List of recommended extensions.
+	"recommendations": [
+		"formulahendry.auto-rename-tag",
+		"naumovs.color-highlight",
+		"mikestead.dotenv",
+		"dsznajder.es7-react-js-snippets",
+		"dbaeumer.vscode-eslint",
+		"kevinmcgowan.typescriptimport"
+	],
+	// List of unwanted extensions.
+	"unwantedRecommendations": [
+		"vscode.emmet"
+	]
+}

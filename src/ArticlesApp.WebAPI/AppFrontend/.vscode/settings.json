@@ -1,0 +1,24 @@
+{
+  "files.exclude": {
+    "node_modules": true,
+    ".vscode": true,
+    "package-lock.json": true,
+    ".gitignore": true,
+    "src/react-app-env.d.ts": true,
+    "build": true
+  },
+  "eslint.format.enable": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "emmet.showExpandedAbbreviation": "never"
+}

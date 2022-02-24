@@ -1,0 +1,60 @@
+{
+  "DbConnectionString": "insert your SQL Server connection string, like Server=(localdb)\\mssqllocaldb;Database=ArticlesApp_Dev;Integrated Security=SSPI;MultipleActiveResultSets=true",
+  "Kestrel": {
+    "Endpoints": {
+      "Http": {
+        "Url": "http://0.0.0.0:5000"
+      },
+      "Https": {
+        "Url": "https://0.0.0.0:5001",
+        "Certificate": {
+          "Path": "local_cert.pfx",
+          "Password": "insert your certificate password, or better set the env var key ARTICLESAPP_KESTREL__ENDPOINTS__HTTPS__CERTIFICATE__PASSWORD",
+          "AllowInvalid": true
+        }
+      }
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Warning",
+      "Override": {
+        "ArticlesApp.WebAPI": "Information"
+      }
+    },
+    "Enrich": [ "FromLogContext" ]
+  },
+  "IdentityServer": {
+    "Key": {
+      "Type": "File",
+      "FilePath": "local_cert.pfx",
+      "Password":"insert your certificate password, or better set the env var key ARTICLESAPP_IDENTITYSERVER__KEY__PASSWORD"
+    }
+  },
+  "Custom": {
+    "ElasticSearch": {
+      "HostUri": "insert your ElasticSearch server URI, like http://localhost:9200",
+      "IsEnabled": true,
+      "IndexNamePrefix": "articlesapp-prod",
+      "NumberOfShards": 1,
+      "NumberOfReplicas": 0
+    },
+    "IdentityServer": {
+      "ModeratorPassword": "insert the password for initial moderator account, must contain : (a symbol, a letter lowercase and uppercase, and a digit) like passworD1$, better set it in the Windows Secrets Manager or set the env var",
+      "Providers": {
+        "GitHub": {
+          "ClientId": "insert your GitHub app credentials",
+          "ClientSecret": "insert your GitHub app credentials"
+        }
+      },
+      "SPA": {
+        "AccessTokenLifetimeMinutes": 15
+      },
+      "EnableLocalAccounts": true
+    },
+    "SoftDeletionPeriodDays": 7,
+    "SignalR_Redis": {
+      "ConnectionString": "insert your Redis server URI, like localhost:6379"
+    }
+  }
+}

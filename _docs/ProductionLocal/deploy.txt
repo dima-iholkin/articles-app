@@ -1,0 +1,48 @@
+ProductionLocal:
+This configuration is meant to run only on a local PC in a local subnet. With no access from the full Internet. 
+Because this configuration and the code is not secure enough.
+
+
+
+Build requirements:
+- Windows OS, to run the build and the scripts.
+- MSBuild or Visual Studio, to build the application.
+- OpenSSL, to generate the HTTPS certificate.
+
+Minimus run requirements:
+- Windows or Linux OS.
+- SQL Server or Visual Studio's LocalDB.
+- Redis, for the SignalR real-time updates.
+
+Full run requirements:
+- ElasticSearch, for logs and analytics.
+- Prometheus, for metrics.
+
+
+
+Deploy:
+0a. Make sure the SQL Server, Redis, ElasticSearch, Prometheus instances run.
+0b. Make sure the SQL Server database is present.
+0c. Make sure the ARTICLESAPP_PublishFolder env var is set.
+0d. Make sure the HTTPS certificate is present.
+1. Create the new Release build into some folder.
+2. Make sure the appconfig.json file, the env vars and the secrets are ready.
+3. If there are DB migrations required:
+  3a. Build the migration Bundle.
+  3b. Prepare the migration script.
+4. Stop the prev app version.
+5. Apply the migration.
+6. Start the new app version.
+
+
+
+Run the DB Reaper:
+1. Run the application in the DbReaper mode.
+
+
+
+Run the Redis instance:
+1. Start the Redis service in WSL.
+
+Run the SQL Server instance:
+- connection string: Server=DESKTOP-C06HQ34;Database=ArticlesApp_Staging;Integrated Security=SSPI;MultipleActiveResultSets=true

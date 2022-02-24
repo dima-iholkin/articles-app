@@ -1,0 +1,34 @@
+in C:\Windows\System32\inetsrv\config\applicationHost.config:
+
+        <applicationPools>
+            <add name="ArticlesApp" autoStart="true" managedRuntimeVersion="" startMode="AlwaysRunning">
+                <processModel identityType="ApplicationPoolIdentity" loadUserProfile="true" idleTimeout="00:00:00" idleTimeoutAction="Terminate" pingInterval="00:01:00" pingResponseTime="00:00:15" />
+                <recycling>
+                    <periodicRestart time="00:00:00">
+                        <schedule>
+                            <clear />
+                            <add value="04:00:00" />
+                        </schedule>
+                    </periodicRestart>
+                </recycling>
+                <failure orphanWorkerProcess="true" />
+                <cpu smpAffinitized="true" smpProcessorAffinityMask="12" smpProcessorAffinityMask2="0" />
+            </add>
+            <applicationPoolDefaults managedRuntimeVersion="v4.0">
+                <processModel identityType="ApplicationPoolIdentity" loadUserProfile="true" setProfileEnvironment="false" />
+            </applicationPoolDefaults>
+        </applicationPools>
+
+        <sites>
+            <site name="ArticlesApp" id="3" serverAutoStart="true">
+                <application path="/" applicationPool="ArticlesApp" enabledProtocols="https">
+                    <virtualDirectory path="/" physicalPath="D:\_publish\Articles app IIS" userName="" />
+                </application>
+                <bindings>
+                    <binding protocol="http" bindingInformation="*:5000:" />
+                    <binding protocol="http" bindingInformation="192.168.1.45:80:" />
+                    <binding protocol="https" bindingInformation="192.168.1.45:443:" sslFlags="64" />
+                    <binding protocol="https" bindingInformation="*:5001:" sslFlags="64" />
+                </bindings>
+            </site>
+        </sites>

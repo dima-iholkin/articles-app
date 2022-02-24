@@ -1,0 +1,27 @@
+﻿@page
+@model ArticlesApp.WebAPI.Areas.Identity.Pages.Account.ReinstateModel
+@inject ArticlesApp.WebAPI._AppConfiguration.AppConfiguration AppConfiguration
+
+@{
+    ViewData["Title"] = "Recovery";
+}
+
+
+
+<div>
+    <form id="account" method="post">
+        <h4>Account recovery</h4>
+        <hr />
+
+        <p>
+            Your account and personal data were deleted.
+            <br>
+            You can recover them for @AppConfiguration.UserAccounts.SoftDeletionPeriodDays days.
+        </p>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" asp-route-returnUrl="@Model.ReturnUrl">
+                Recover my account
+            </button>
+        </div>
+    </form>
+</div>

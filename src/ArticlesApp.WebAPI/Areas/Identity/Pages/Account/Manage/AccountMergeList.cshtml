@@ -1,0 +1,132 @@
+﻿@page
+@using ArticlesApp.Database.SqlServer.Models
+@model AccountMergeListModel
+
+@{
+    ViewData["Title"] = "Account merge requests";
+    ViewData["ActivePage"] = ManageNavPages.AccountMergeList;
+}
+
+
+
+<partial
+    name="_StatusMessage"
+    for="StatusMessage"
+/>
+<h4>
+    Open account merge requests 
+</h4>
+<hr />
+<div class="row">
+    <div>
+        @if (Model.AccountMerges!.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            Primary account
+                        </th>
+                        <th scope="col">
+                            Secondary account
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (AccountMerge_SqlServer acc in Model.AccountMerges)
+                    {
+                        <tr>
+                            @if (acc.PrimaryUserId == Model.CurrentUser!.Id)
+                            {
+                                <td>
+                                    This account
+                                </td>
+                            } 
+                            else 
+                            {
+                                bool otherUserFound = Model.OtherUsers.TryGetValue(
+                                    acc.PrimaryUserId, 
+                                    out ApplicationUser_DB? otherUser
+                                );
+                                if (otherUserFound == false)
+                                {
+                                    <td>
+                                        User account not found
+                                    </td>
+                                } 
+                                else
+                                {
+                                    if (otherUser!.Email == null)
+                                    {
+                                        <td>
+                                            @otherUser!.UserName
+                                        </td>
+                                    } 
+                                    else
+                                    {
+                                        <td>
+                                            @otherUser!.UserName, @otherUser!.Email
+                                        </td>    
+                                    }
+                                }
+                            }
+                            @if (acc.SecondaryUserId == Model.CurrentUser!.Id)
+                            {
+                                <td>
+                                    This account
+                                </td>
+                            } 
+                            else 
+                            {
+                                bool otherUserFound = Model.OtherUsers.TryGetValue(
+                                    acc.SecondaryUserId, 
+                                    out ApplicationUser_DB? otherUser
+                                );
+                                if (otherUserFound == false)
+                                {
+                                    <td>
+                                        User account not found
+                                    </td>
+                                } 
+                                else
+                                {
+                                    if (otherUser!.Email == null)
+                                    {
+                                        <td>
+                                            @otherUser!.UserName
+                                        </td>
+                                    } 
+                                    else
+                                    {
+                                        <td>
+                                            @otherUser!.UserName, @otherUser!.Email
+                                        </td>    
+                                    }
+                                }
+                            }
+                            <td>
+                                <a 
+                                    type="button" 
+                                    class="btn btn-info"
+                                    asp-page="/Account/Manage/AccountMerge"
+                                    asp-route-Id=@acc.Id
+                                    style="color: white;"
+                                >
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>
+                No open AccountMerge requests for this account!
+            </p>
+        }
+    </div>
+</div>

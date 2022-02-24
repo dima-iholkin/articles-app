@@ -1,0 +1,9 @@
+Create the database:
+0. Make sure the SQL Server instance runs.
+1. Create the new Release build into some folder, or keep the existing Release build.
+2. Make sure the appconfig.json file, the env vars and the secrets are ready.
+3. Run the application in the DbFill mode.
+4. Set up a Moderator account:
+  4a. If the local accounts are enabled, the console output will contain the Moderator credentials.
+  4b. If the local accounts are disabled, after you register your user account with GitHub or another provider, 
+      you'll have to go into the SQL Server database tables and add your user into the Moderator role.

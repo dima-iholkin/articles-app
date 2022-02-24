@@ -1,0 +1,34 @@
+{
+  "profiles": {
+    "Dev Articles app": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SecretsSource": "Local"
+      }
+    },
+    "Dev DBFill mode": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SecretsSource": "Local",
+        "RunMode": "DbFill"
+      }
+    },
+    "Dev DBReaper mode": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "SecretsSource": "Local",
+        "RunMode": "DbReaper"
+      }
+    },
+    "Staging Articles app": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging",
+        "SecretsSource": "Local"
+      }
+    }
+  }
+}

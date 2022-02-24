@@ -1,0 +1,8 @@
+1. Create the prev Release build into some folder.
+2. Prepare the appconfig.json file, the env vars and the secrets.
+3. If there are revert DB migrations required:
+  3a. Build the revert migration Bundle.
+  3b. Prepare the revert migration script.
+4. Stop the new app version.
+5. Apply the revert migration.
+6. Start the prev app version.

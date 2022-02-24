@@ -1,0 +1,41 @@
+﻿@page
+@model PersonalDataModel
+@inject ArticlesApp.WebAPI._AppConfiguration.AppConfiguration AppConfiguration
+
+@{
+    ViewData["Title"] = "Personal Data";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+
+
+<h4>@ViewData["Title"]</h4>
+
+<div class="row">
+    <div class="col-md-6">
+        <p>
+            Your account contains personal data that you have given us.
+            This page allows you to download or delete this data.
+        </p>
+        <p>
+            <strong>
+                Deleting this data will permanently remove your account.
+            </strong>
+        </p>
+        <p>
+            You will have @AppConfiguration.UserAccounts.SoftDeletionPeriodDays days to recover your account and data.
+        </p>
+        <form id="download-data" asp-page="DownloadPersonalData" method="post" class="form-group">
+            <button class="btn btn-primary" type="submit">Download my data</button>
+        </form>
+        <p>
+            <a id="delete" asp-page="DeletePersonalData" class="btn btn-secondary">Delete my account and data</a>
+        </p>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

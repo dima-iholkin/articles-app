@@ -1,0 +1,56 @@
+0. Initial info.
+> https://stackoverflow.com/questions/60772007/how-to-generate-and-add-a-signing-key-for-identity-server-4
+> https://identityserver4.readthedocs.io/en/latest/topics/crypto.html
+> https://identityserver4.readthedocs.io/en/latest/topics/startup.html
+
+
+
+1. Create a certificate directly into the Windows Certificate Store.
+
+PowerShell 7 (latest):
+> New-SelfSignedCertificate -certstorelocation cert:\currentuser\my -KeyAlgorithm RSA -KeyLength 2048 -DnsName articlesapp.com
+
+Check the certificate in the Windows Certificate Store:
+> Run (Win + R) -> certmgr.msc -> (Certificates - CurrentUser) -> Personal -> Certificates -> articlesapp.com
+
+info:
+> https://medium.com/the-new-control-plane/generating-self-signed-certificates-on-windows-7812a600c2d8
+> https://docs.microsoft.com/en-us/powershell/module/pki/new-selfsignedcertificate?view=windowsserver2019-ps
+
+
+
+2. Configure the IdentityServer to use this cert in appsettings.json.
+
+appsettings.json:
+> "IdentityServer": {
+    "Key": {
+      "Type": "Store",
+      "StoreName": "My",
+      "StoreLocation": "CurrentUser",
+      "Name": "CN=articlesapp.com"
+    }
+  },
+
+info:
+> https://stackoverflow.com/questions/57246219/how-to-configure-key-settings-for-identityserver-in-appsettings-json-for-aspnet
+
+
+
+3. Check out the current certs at the IdentityServer endpoint.
+> https://localhost:5001/.well-known/openid-configuration/jwks
+
+info:
+> https://docs.identityserver.io/en/latest/endpoints/discovery.html
+
+
+
+4. Possible errors:
+> If the process somehow doesn't have access to the private key. Happened to me when I saved the cert to the "localmachine", not the "CurrentUser" - probably it had required more priviledges.
+
+
+
+5. To rotate the certificates - some more actions are needed.
+> It's recommended to rotate the keys at least every 90 days.
+
+info:
+> https://brockallen.com/2019/08/09/identityserver-and-signing-key-rotation/
