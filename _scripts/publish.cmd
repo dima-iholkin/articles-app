@@ -1,18 +1,18 @@
 @ECHO off
 
 SET publish_folder=%ARTICLESAPP_PublishFolder%
-ECHO Publish folder is: %publish_folder%
+ECHO Publish folder is: "%publish_folder%"
 
-rmdir %publish_folder% /S /Q
+rmdir "%publish_folder%" /S /Q
 echo The folder %publish_folder% was deleted.
 
-mkdir %publish_folder%
+mkdir "%publish_folder%"
 echo The folder %publish_folder% was recreated.
 
 cd ..
 cd src
 
-dotnet publish --configuration Release --output %publish_folder%
+dotnet publish --configuration Release --output "%publish_folder%"
 
 cd ArticlesApp.WebAPI
 
@@ -26,7 +26,7 @@ cd ArticlesApp.WebAPI
 @REM echo %myvar1% file was copied.
 
 @REM Copy the HTTPS cert.
-copy local_cert.pfx %publish_folder%
+copy local_cert.pfx "%publish_folder%"
 echo local_cert.pfx file was copied.
 
 PAUSE

@@ -1,11 +1,11 @@
 {
   "files.exclude": {
-    "node_modules": true,
-    ".vscode": true,
-    "package-lock.json": true,
-    ".gitignore": true,
-    "src/react-app-env.d.ts": true,
-    "build": true
+    "node_modules": false,
+    ".vscode": false,
+    "package-lock.json": false,
+    ".gitignore": false,
+    "src/react-app-env.d.ts": false,
+    "build": false
   },
   "eslint.format.enable": true,
   "[typescriptreact]": {
